@@ -892,6 +892,7 @@ public class BrokerController {
             @Override
             public void run() {
                 try {
+                    //启动时向所有的name server发送心跳包
                     BrokerController.this.registerBrokerAll(true, false, brokerConfig.isForceRegister());
                 } catch (Throwable e) {
                     log.error("registerBrokerAll Exception", e);

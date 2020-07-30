@@ -49,6 +49,7 @@ public class NamesrvController {
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryImpl(
         "NSScheduledThread"));
     private final KVConfigManager kvConfigManager;
+    //负责缓存整个集群的broker信息，以及topic和queue的配置信息。
     private final RouteInfoManager routeInfoManager;
 
     private RemotingServer remotingServer;
