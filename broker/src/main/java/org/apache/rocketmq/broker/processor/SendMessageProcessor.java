@@ -336,6 +336,7 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor implement
                 maxReconsumeTimes = requestHeader.getMaxReconsumeTimes();
             }
             int reconsumeTimes = requestHeader.getReconsumeTimes() == null ? 0 : requestHeader.getReconsumeTimes();
+            //如果重试次数超过最大重试次数：默认16 则将消息投递到DLD延时队列 topic为 %DLQ%+消费组名
             if (reconsumeTimes >= maxReconsumeTimes) {
                 newTopic = MixAll.getDLQTopic(groupName);
                 int queueIdInt = Math.abs(this.random.nextInt() % 99999999) % DLQ_NUMS_PER_GROUP;
@@ -429,6 +430,10 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor implement
             }
             putMessageResult = this.brokerController.getTransactionalMessageService().prepareMessage(msgInner);
         } else {
+            //存储消息到broker
+            /**
+             * @see org.apache.rocketmq.store.DefaultMessageStore
+             */
             putMessageResult = this.brokerController.getMessageStore().putMessage(msgInner);
         }
 

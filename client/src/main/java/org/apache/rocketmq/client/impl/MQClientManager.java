@@ -45,7 +45,9 @@ public class MQClientManager {
     }
 
     public MQClientInstance getOrCreateMQClientInstance(final ClientConfig clientConfig, RPCHook rpcHook) {
+        //由ip+instance+unitname组成，为了避免同一个机器部署多个JVM，如果instance是DEFAult，则默认填充进程iD
         String clientId = clientConfig.buildMQClientId();
+        //key clientId
         MQClientInstance instance = this.factoryTable.get(clientId);
         if (null == instance) {
             instance =

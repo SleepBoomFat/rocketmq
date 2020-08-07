@@ -149,6 +149,7 @@ public class AdminBrokerProcessor extends AsyncNettyRequestProcessor implements 
     @Override
     public RemotingCommand processRequest(ChannelHandlerContext ctx,
         RemotingCommand request) throws RemotingCommandException {
+        //针对每个RequestCode都有对应的处理器
         switch (request.getCode()) {
             case RequestCode.UPDATE_AND_CREATE_TOPIC:
                 return this.updateAndCreateTopic(ctx, request);
